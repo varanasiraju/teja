@@ -1,12 +1,14 @@
 pipeline {
-  agent { node { label 'build' } }
+  agent any
     stages {
         stage ('package stage') {
             steps {
+	    node ('build' {
 		git 'https://github.com/GitPracticeRepo/spring-petclinic.git'
                 sh 'mvn clean package'
 		sh label: '', script: 'java -jar target/*.jar &'
                }
+	      } 
             }
         stage('SonarQube analysis') {
 	 steps {
