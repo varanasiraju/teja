@@ -5,7 +5,7 @@ pipeline {
             steps {
 		git 'https://github.com/GitPracticeRepo/spring-petclinic.git'
                 sh 'mvn clean package'
-		sh label: '', script: 'java -jar target/*.jar'
+		sh label: '', script: 'java -jar target/*.jar &'
                }
             }
         stage('SonarQube analysis') {
