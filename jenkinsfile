@@ -14,8 +14,8 @@ pipeline {
 	 steps {
           // performing sonarqube analysis with "withSonarQubeENV(<Name of Server configured in Jenkins>)"
           withSonarQubeEnv('SONARQUBE-TEST') {
-            // requires SonarQube Scanner for Maven 3.2+
-            sh 'nmvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
+            // requires SonarQube Scanner for Maven 3.5+
+            sh 'nmvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.5:sonar'
      }
     }
   }
