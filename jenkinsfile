@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage ('package stage') {
             steps {
-	    node ('build' {
+	    node ('build') {
 		git 'https://github.com/GitPracticeRepo/spring-petclinic.git'
                 sh 'mvn clean package'
 		sh label: '', script: 'java -jar target/*.jar &'
