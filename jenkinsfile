@@ -1,21 +1,24 @@
 pipeline {
-  agent any
-    stages {
-        stage ('package stage') {
-            steps {
-		git 'https://github.com/GitPracticeRepo/spring-petclinic.git'
-                sh 'mvn clean package'
-		sh label: '', script: 'java -jar target/*.jar &'
-	      } 
-            }
-        stage('SonarQube analysis') {
-	 steps {
-          // performing sonarqube analysis with "withSonarQubeENV(<Name of Server configured in Jenkins>)"
-          withSonarQubeEnv('SONARQUBE-TEST') {
-            // requires SonarQube Scanner for Maven 3.5+
-            sh 'nmvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.5:sonar'
-     }
+ agent {
+        label 'build'
+    }
+   stage('SCM') {
+      // git clone
+	  git 'https://github.com/GitPracticeRepo/spring-petclinic.git'
+   }
+   
+   stage ('build the packages') {
+      // mvn package
+	  sh 'mvn package'
+   }
+   
+   stage('SonarQube analysis') {
+    // performing sonarqube analysis with "withSonarQubeENV(<Name of Server configured in Jenkins>)"
+    withSonarQubeEnv('SONARQUBE-TEST') {
+      // requires SonarQube Scanner for Maven 3.2+
+      sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
     }
   }
- }
+   
+   
 }
